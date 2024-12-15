@@ -9,30 +9,41 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Employee Management" FontSize="16" FontWeight="Bold" Grid.Row="0" Margin="0,0,0,10"/>
-
+        <TextBlock Text="Project Management" FontSize="16" FontWeight="Bold" Grid.Row="0" Margin="0,0,0,10"/>
+        
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Left" Margin="0,30,0,10">
-            <Button Name="btnAddEmployee" Content="New Employee" Width="100" Margin="5" Click="btnAddEmployee_Click"/>
-            <Button Name="btnEditEmployee" Content="Edit Employee" Width="100" Margin="5" Click="btnEditEmployee_Click"/>
+            <Button Name="btnEmployees" Content="Employees" Width="100" Margin="5" Click="btnShowEmployees_Click"/>
+            <Button Name="btnProjects" Content="Projects" Width="100" Margin="5" Click="btnShowProjects_Click"/>
         </StackPanel>
 
-        <TextBlock Text="Project List" FontSize="16" FontWeight="Bold" Grid.Row="1" Margin="0,10,0,10"/>
+        <TextBlock Name="listName" Text="Project List" FontSize="16" FontWeight="Bold" Grid.Row="1" Margin="0,0,0,10"/>
 
-        <DataGrid Name="dataGridProjects" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,40,0,0">
+        <DataGrid Name="dataGridProjects" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,20,0,0" Visibility="Visible">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding ProjectID}" Width="50"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150"/>
                 <DataGridTextColumn Header="Start Date" Binding="{Binding StartDate}" Width="100"/>
                 <DataGridTextColumn Header="End Date" Binding="{Binding EndDate}" Width="100"/>
-                <DataGridTextColumn Header="Responsible" Binding="{Binding ResponsibleEmployee}" Width="150"/>
+                <DataGridTextColumn Header="Responsible" Binding="{Binding EmpID}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid Name="dataGridEmployees" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,20,0,0" Visibility="Hidden">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding EmployeeID}" Width="50"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="100"/>
+                <DataGridTextColumn Header="Firstname" Binding="{Binding FirstName}" Width="100"/>
+                <DataGridTextColumn Header="Department" Binding="{Binding Department}" Width="150"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="100"/>
             </DataGrid.Columns>
         </DataGrid>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Left" Margin="0,10,0,0">
-            <Button Name="btnAddProject" Content="New Project" Width="100" Margin="5" Click="btnAddProject_Click"/>
-            <Button Name="btnEditProject" Content="Edit Project" Width="100" Margin="5" Click="btnEditProject_Click"/>
+            <Button Name="btnAddProject" Content="New" Width="100" Margin="5" Click="btnAdd_Click"/>
+            <Button Name="btnEditProject" Content="Edit" Width="100" Margin="5" Click="btnEdit_Click"/>
             <Button Name="btnViewGanttChart" Content="View Gantt Chart" Width="100" Margin="5" Click="btnViewGanttChart_Click"/>
         </StackPanel>
+        <Canvas HorizontalAlignment="Left" Height="72" Margin="-440,75,0,0" Grid.Row="1" VerticalAlignment="Top" Width="97"/>
     </Grid>
 </Window>
 

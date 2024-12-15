@@ -1,0 +1,62 @@
+<Window x:Class="ProjektManager.AddProjectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Edit Projects" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight">
+    <Grid>
+                
+            <!-- Form on the right -->
+            <Grid Grid.Column="0" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Project ID -->
+                <TextBlock Text="ID:" Grid.Row="0" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+                <TextBox Name="txtID" Grid.Row="0" Grid.Column="1" Margin="5"/>
+                
+                <!-- Name -->
+                <TextBlock Text="Name:" Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+                <TextBox Name="txtName" Grid.Row="1" Grid.Column="1" Margin="5"/>
+
+                <!-- Start date -->
+                <TextBlock Text="Start date:" Grid.Row="2" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+                <DatePicker Name="txtStart" Grid.Row="2" Grid.Column="1" Margin="5"/>
+
+                <!-- End date -->
+                <TextBlock Text="End date:" Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+                <DatePicker Name="txtEnd" Grid.Row="3" Grid.Column="1" Margin="5"/>
+
+                <!-- Employee ID -->
+                <TextBlock Text="Employee ID" Grid.Row="4" Grid.Column="0" Margin="5" VerticalAlignment="Center"/>
+                <TextBox Name="txtEmpID" Grid.Row="4" Grid.Column="1" Margin="5"/>
+
+                <TextBlock Text="Phases" Grid.Row="5" Grid.Column="0" Margin="5,10,0,0"  VerticalAlignment="Center"/>
+            <ScrollViewer Grid.Row="6" Grid.ColumnSpan="2" Margin="0,0,0,0" MaxHeight="300">
+                    <DataGrid Name="dataGridPhases" AutoGenerateColumns="False" CanUserAddRows="True" Margin="0,0,0,0" Visibility="Visible">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Number"       Binding="{Binding Number    }" Width="60"/>
+                            <DataGridTextColumn Header="Name"         Binding="{Binding Name      }" Width="100"/>
+                            <DataGridTextColumn Header="Duration (h)" Binding="{Binding Duration  }" Width="80"/>
+                            <DataGridTextColumn Header="Precursor"    Binding="{Binding Precursor }" Width="60"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+                <!-- Buttons -->
+                <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+                    <Button Name="btnDel" Content="Delete" Width="100" Margin="5" Click="btnDel_Click"/>
+                    <Button Name="btnSave" Content="Save" Width="100" Margin="5" Click="btnSave_Click"/>
+                </StackPanel>
+            </Grid>
+    </Grid>
+</Window>
