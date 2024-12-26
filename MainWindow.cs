@@ -89,35 +89,23 @@ namespace ProjektManager {
         }
 
         private void btnEdit_Click (object sender, RoutedEventArgs e) {
+            int rowIndex = GetSelectedRow();
+            if (rowIndex < 0) {
+                return;
+            }
             if (IsEmpActiveList) {
-                var selectedItems = dataGridEmployees.SelectedItems;
-                if (selectedItems == null || selectedItems.Count == 0) {
-                    return;
-                }
-                int rowIndex = dataGridEmployees.Items.IndexOf(dataGridEmployees.SelectedItem);
-                if (rowIndex < 0 || rowIndex >= Employees.Count) {
-                    return;
-                }
                 Employee selectedEmployee = Employees[rowIndex];
                 AddEmployeesWindow addEmp = new AddEmployeesWindow(true, new Employee(selectedEmployee));
                 addEmp.ShowDialog();
                 if (addEmp.Result == 1) {
                     Employees[rowIndex] = addEmp.Emp;
-                } else if(addEmp.Result == 2) {            // User clicked delete? => Remove employee.
+                } else if(addEmp.Result == 2) {             // User clicked delete? => Remove employee.
                     Employees.RemoveAt(rowIndex);
                 }
             } else {
-                var selectedItems = dataGridProjects.SelectedItems;
-                if (selectedItems == null || selectedItems.Count == 0) {
-                    return;
-                }
-                int rowIndex = dataGridProjects.Items.IndexOf(dataGridProjects.SelectedItem);
-                if (rowIndex < 0 || rowIndex >= Projects.Count) {
-                    return;
-                }
-                Project                     selectedProject = Projects[rowIndex];
-                ObservableCollection<Phase> copyPhases      = new ObservableCollection<Phase>(selectedProject.Phases.Select(phase => phase.Clone()));
-                AddProjectWindow            addProj         = new AddProjectWindow(true, new Project(selectedProject), copyPhases);
+                Project selectedProject                = Projects[rowIndex];
+                ObservableCollection<Phase> copyPhases = new ObservableCollection<Phase>(selectedProject.Phases.Select(phase => phase.Clone()));
+                AddProjectWindow            addProj    = new AddProjectWindow(true, new Project(selectedProject), copyPhases);
                 addProj.ShowDialog();
                 if (addProj.Result == 1) {
                     addProj.Proj.Phases = addProj.Phases;
@@ -129,18 +117,25 @@ namespace ProjektManager {
         }
 
         private void btnViewGanttChart_Click (object sender, RoutedEventArgs e) {
+            int rowIndex    = GetSelectedRow();
+            if (rowIndex < 0) {
+                return;
+            }
+            Project Project = Projects[rowIndex];
+            var window      = new GantWindow(Project.Phases);
+            window.Show();
+        }
+
+        private int GetSelectedRow() {
             var selectedItems = dataGridProjects.SelectedItems;
             if (selectedItems == null || selectedItems.Count == 0) {
-                return;
+                return -1;
             }
             int rowIndex = dataGridProjects.Items.IndexOf(dataGridProjects.SelectedItem);
             if (rowIndex < 0 || rowIndex >= Projects.Count) {
-                return;
+                return -1;
             }
-            Project selectedProject = Projects[rowIndex];
-
-            var window = new GantWindow(selectedProject.Phases);
-            window.Show();
+            return rowIndex;
         }
     }
 
@@ -176,6 +171,7 @@ namespace ProjektManager {
         private char _precursor;
         public string Name       { get; set; }
         private int   _duration  { get; set; }
+        public int Inserted = 0;  // Indicates if the Phase is inserted in the BinTree in the GantWindow class.
 
         public int Duration {
             get {
